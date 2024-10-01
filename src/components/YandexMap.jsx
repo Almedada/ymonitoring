@@ -1,23 +1,20 @@
 import React from 'react';
 import { YMaps, Map } from '@pbe/react-yandex-maps';
-import Points from './Points'; 
-import TrainIconPlacemark from './TrainIconPlacemark';
+import TrainRoutes from './TrainRoutes'; // Компонент для отображения путей
+import MovingTrain from './MovingTrain'; // Компонент для анимации поезда
 
 const YandexMap = () => {
-  // Массив с координатами точек (например, городов)
-  const points = [
-    [54.846468, 83.052066], // Точка 1
-    [54.980468, 82.898066], // Точка 2
-  ];
-
-  // Массив с координатами поездов
-  const trains = [
-    [54.791468, 82.897066], // Поезд 1
-    [54.864468, 83.101066], // Поезд 2
+  // Маршруты поездов (массив координат)
+  const trainRoutes = [
+    [
+      [54.846468, 83.052066], // Координаты ЖД путей
+      [54.980468, 82.898066],
+      [54.791468, 82.897066],
+    ],
   ];
 
   return (
-    <YMaps>
+    <YMaps /*query={{ apikey: '40c39907-f3a3-4dcf-b9a6-273845d69695' }}*/>
       <Map
         defaultState={{
           center: [54.846468, 83.052066],  // Центр карты
@@ -26,13 +23,8 @@ const YandexMap = () => {
         width="100%" // Ширина карты
         height="1080px" // Высота карты
       >
-        {/* Отображение точек */}
-        <Points points={points} />
-
-        {/* Отображение поездов */}
-        {trains.map((train, index) => (
-          <TrainIconPlacemark key={index} coordinates={train} /> // Используем компонент для поездов
-        ))}
+        <TrainRoutes routes={trainRoutes} /> {/* Отображение ЖД маршрутов */}
+        <MovingTrain route={trainRoutes[0]} speed={0.0002} /> {/* Плавное движение поезда */}
       </Map>
     </YMaps>
   );
